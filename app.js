@@ -51,7 +51,7 @@ app.use(cors());
 const store= MongoStore.create({
   mongoUrl: dbUrl,
   crypto:{
-    secret: process.env.secret
+    secret: process.env.secret,
   },
   touchAfter: 24 * 3600,
 });
@@ -73,7 +73,7 @@ const sessionOptions = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Hi, I am Groot!");
+  res.redirect("/listings");
 });
 
 app.use(session(sessionOptions));
@@ -102,14 +102,14 @@ app.all("*", (req, res, next) => {
   next(new expressError(404, "|---ERROR---| Page not Found"));
 });
 
-app.use((error, req, res, next) => {
-  if (res.headersSent) {
-    return next(error);
-  }
-  let { statusCode = 500, message = "Something went wrong!!" } = error;
-  console.log(error);
-  res.sendStatus(statusCode).send(message);
-});
+// app.use((error, req, res, next) => {
+//   if (res.headersSent) {
+//     return next(error);
+//   }
+//   let { statusCode = 500, message = "Something went wrong!!" } = error;
+//   console.log(error);
+//   res.sendStatus(statusCode).send(message);
+// });
 
 app.listen(8080, () => {
   console.log("App is listening!");
