@@ -73,7 +73,7 @@ const sessionOptions = {
 };
 
 app.get("/", (req, res) => {
-  res.send("Hi, I am Groot!");
+  res.redirect("/listings");
 });
 
 app.use(session(sessionOptions));
